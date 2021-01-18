@@ -100,7 +100,7 @@ class CoCo:
 
         def _on_connect(client, userdata, flags, rc):
             if rc == 0:
-                _LOGGER.info('Connected! MP was here 18 Jan 2021')
+                _LOGGER.info('Connected!')
                 client.subscribe(self._profile_creation_id + MQTT_TOPIC_SUFFIX_RSP, qos=1)
                 client.subscribe(self._profile_creation_id + MQTT_TOPIC_PUBLIC_RSP, qos=1)
                 client.subscribe(self._profile_creation_id + MQTT_TOPIC_SUFFIX_EVT, qos=1)
