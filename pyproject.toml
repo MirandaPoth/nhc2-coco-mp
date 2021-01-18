@@ -4,8 +4,8 @@ version = "1.3.3"
 description = "Python controller for a Niko Home Control II installation"
 license = "MIT"
 authors = ["filipvh"]
-repository = "https://github.com/filipvh/nhc2-coco"
-homepage = "https://github.com/filipvh/nhc2-coco"
+repository = "https://github.com/MirandaPoth/nhc2-coco-mp"
+homepage = "https://github.com/MirandaPoth/nhc2-coco-mp"
 readme = 'README.md'
 keywords = ['niko', 'coco', 'nhc', 'nhc2', 'home', 'control', 'II']
 
