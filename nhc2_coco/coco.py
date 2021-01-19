@@ -45,6 +45,7 @@ class CoCo:
 
         if ca_path is None:
             ca_path = os.path.dirname(os.path.realpath(__file__)) + MQTT_CERT_FILE
+        _LOGGER.info('ca_path is ' + ca_path)
         client = mqtt.Client(protocol=MQTT_PROTOCOL, transport=MQTT_TRANSPORT)
         client.username_pw_set(username, password)
         client.tls_set(ca_path)
