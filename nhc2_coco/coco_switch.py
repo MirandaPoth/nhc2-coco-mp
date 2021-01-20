@@ -1,7 +1,7 @@
 import logging
 
 from .coco_entity import CoCoEntity
-from .const import KEY_STATUS, KEY_BASICSTATE, VALUE_ON, VALUE_OFF
+from .const import KEY_STATUS, KEY_BASICSTATE, VALUE_ON, VALUE_OFF, VALUE_TRIGGERED
 from .helpers import extract_property_value_from_device
 
 _LOGGER = logging.getLogger(__name__)
@@ -24,14 +24,20 @@ class CoCoSwitch(CoCoEntity):
         self.update_dev(dev, callback_container)
 
     def turn_on(self):
-        self._command_device_control(self._uuid, self.on_off_property, VALUE_ON)
         # This gets called from HA when it wants to turn it ON
         _LOGGER.debug('HA is turning ON ' + self.name)
+        if self.on_off_property == KEY_BASICSTATE:
+            self._command_device_control(self._uuid, self.on_off_property, VALUE_TRIGGERED)
+        else:
+            self._command_device_control(self._uuid, self.on_off_property, VALUE_ON)
 
     def turn_off(self):
-        self._command_device_control(self._uuid, self.on_off_property, VALUE_OFF)
         # This gets called from HA when it wants to turn it OFF
-        _LOGGER.debug('HA is turning ON ' + self.name)
+        _LOGGER.debug('HA is turning OFF ' + self.name)
+        if self.on_off_property == KEY_BASICSTATE:
+            self._command_device_control(self._uuid, self.on_off_property, VALUE_TRIGGERED)
+        else:
+            self._command_device_control(self._uuid, self.on_off_property, VALUE_OFF)
 
     def update_dev(self, dev, callback_container=None):
         has_changed = super().update_dev(dev, callback_container)

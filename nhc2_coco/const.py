@@ -37,13 +37,15 @@ KEY_STATUS = 'Status'
 KEY_TYPE = 'Type'
 KEY_UUID = 'Uuid'
 # MP 20/01/2021 For generic and alloff
-KEY_BASICSTATE = 'Triggered'
+KEY_BASICSTATE = 'BasicState'
 
 VALUE_ON = 'On'
 VALUE_OFF = 'Off'
 VALUE_OPEN = 'Open'
 VALUE_STOP = 'Stop'
 VALUE_CLOSE = 'Close'
+# MP 20/01/2021 For generic and alloff
+VALUE_TRIGGERED = 'Triggered'
 
 DEV_TYPE_ACTION = 'action'
 
