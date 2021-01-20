@@ -39,16 +39,15 @@ class CoCoSwitch(CoCoEntity):
             self._on_off_property = KEY_STATUS
         else: 
             self._on_off_property = KEY_BASICSTATE
+        _LOGGER.debug('For ' + self.name + ', self._on_off_property is ' + self._on_off_property)
         # MP debugging ...
         basicstate_value = extract_property_value_from_device(dev, KEY_BASICSTATE)
         if basicstate_value:
             _LOGGER.debug('BasicState of device ' + self.model + ' ' + self.uuid + ' ' + self.name + ' is ' + basicstate_value)
-            _LOGGER.debug('self._on_off_property is ' + self._on_off_property)
 
         if status_value and self._is_on != (self._on_off_property == VALUE_ON):
             self._is_on = (status_value == VALUE_ON)
             has_changed = True
-
 
         """
         if ( status_value and self._is_on != (status_value == VALUE_ON) ) or \
