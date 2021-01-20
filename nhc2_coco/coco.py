@@ -45,7 +45,6 @@ class CoCo:
 
         if ca_path is None:
             ca_path = os.path.dirname(os.path.realpath(__file__)) + MQTT_CERT_FILE
-        _LOGGER.info('ca_path is ' + ca_path)
         client = mqtt.Client(protocol=MQTT_PROTOCOL, transport=MQTT_TRANSPORT)
         client.username_pw_set(username, password)
         client.tls_set(ca_path)
@@ -106,7 +105,7 @@ class CoCo:
 
         def _on_connect(client, userdata, flags, rc):
             if rc == 0:
-                _LOGGER.info('Connected! MP')
+                _LOGGER.info('Connected!')
                 client.subscribe(self._profile_creation_id + MQTT_TOPIC_SUFFIX_RSP, qos=1)
                 client.subscribe(self._profile_creation_id + MQTT_TOPIC_PUBLIC_RSP, qos=1)
                 client.subscribe(self._profile_creation_id + MQTT_TOPIC_SUFFIX_EVT, qos=1)
