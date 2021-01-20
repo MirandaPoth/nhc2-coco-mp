@@ -25,11 +25,13 @@ class CoCoSwitch(CoCoEntity):
 
     def turn_on(self):
         self._command_device_control(self._uuid, self.on_off_property, VALUE_ON)
-        _LOGGER.debug(self.name + ' is turning ' + self.on_off_property + ' ON')
+        # This gets called from HA when it wants to turn it ON
+        _LOGGER.debug('HA is turning ON ' + self.name)
 
     def turn_off(self):
         self._command_device_control(self._uuid, self.on_off_property, VALUE_OFF)
-        _LOGGER.debug(self.name + ' is turning ' + self.on_off_property + ' OFF')
+        # This gets called from HA when it wants to turn it OFF
+        _LOGGER.debug('HA is turning ON ' + self.name)
 
     def update_dev(self, dev, callback_container=None):
         has_changed = super().update_dev(dev, callback_container)

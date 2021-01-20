@@ -29,11 +29,13 @@ class CoCoLight(CoCoEntity):
 
     def turn_on(self):
         self._command_device_control(self._uuid, KEY_STATUS, VALUE_ON)
-        _LOGGER.debug(self.name + ' is turning ON')
+        # This gets called from HA when it wants to turn it ON
+        _LOGGER.debug('HA is turning ON ' + self.name)
 
     def turn_off(self):
         self._command_device_control(self._uuid, KEY_STATUS, VALUE_OFF)
-        _LOGGER.debug(self.name + ' is turning OFF')
+        # This gets called from HA when it wants to turn it OFF
+        _LOGGER.debug('HA is turning OFF ' + self.name )
 
     def set_brightness(self, brightness):
         if brightness == brightness and 100 >= brightness >= 0:

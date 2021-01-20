@@ -37,7 +37,7 @@ KEY_STATUS = 'Status'
 KEY_TYPE = 'Type'
 KEY_UUID = 'Uuid'
 # MP 20/01/2021 For generic and alloff
-KEY_BASICSTATE = 'BasicState'
+KEY_BASICSTATE = 'Triggered'
 
 VALUE_ON = 'On'
 VALUE_OFF = 'Off'
