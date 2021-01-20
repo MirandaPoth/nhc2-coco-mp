@@ -100,6 +100,8 @@ class CoCo:
                     try:
                         if KEY_UUID in device:
                             self._device_callbacks[device[KEY_UUID]][INTERNAL_KEY_CALLBACK](device)
+                            _LOGGER.info('Setting callbacks for ...')
+                            _LOGGER.info(device)
                     except:
                         pass
 
