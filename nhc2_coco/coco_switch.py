@@ -25,11 +25,11 @@ class CoCoSwitch(CoCoEntity):
 
     def turn_on(self):
         self._command_device_control(self._uuid, self.on_off_property, VALUE_ON)
-        _LOGGER.debug(self.name + 'is turning ' + self.on_off_property + ' ON')
+        _LOGGER.debug(self.name + ' is turning ' + self.on_off_property + ' ON')
 
     def turn_off(self):
         self._command_device_control(self._uuid, self.on_off_property, VALUE_OFF)
-        _LOGGER.debug(self.name + 'is turning ' + self.on_off_property + ' OFF')
+        _LOGGER.debug(self.name + ' is turning ' + self.on_off_property + ' OFF')
 
     def update_dev(self, dev, callback_container=None):
         has_changed = super().update_dev(dev, callback_container)
@@ -45,16 +45,16 @@ class CoCoSwitch(CoCoEntity):
         if basicstate_value:
             _LOGGER.debug('BasicState of device ' + self.model + ' ' + self.uuid + ' ' + self.name + ' is ' + basicstate_value)
 
+        """
         if status_value and self._is_on != (self.on_off_property == VALUE_ON):
             self._is_on = (status_value == VALUE_ON)
             has_changed = True
+        """            
 
-        """
         if ( status_value and self._is_on != (status_value == VALUE_ON) ) or \
             ( basicstate_value and self._is_on != (basicstate_value == VALUE_ON) ):
             self._is_on = (status_value == VALUE_ON)
             has_changed = True
-        """
 
         return has_changed
 
