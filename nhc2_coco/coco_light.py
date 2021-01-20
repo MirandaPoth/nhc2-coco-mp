@@ -29,9 +29,11 @@ class CoCoLight(CoCoEntity):
 
     def turn_on(self):
         self._command_device_control(self._uuid, KEY_STATUS, VALUE_ON)
+        _LOGGER.debug(self.name + ' is turning ON')
 
     def turn_off(self):
         self._command_device_control(self._uuid, KEY_STATUS, VALUE_OFF)
+        _LOGGER.debug(self.name + ' is turning OFF')
 
     def set_brightness(self, brightness):
         if brightness == brightness and 100 >= brightness >= 0:
