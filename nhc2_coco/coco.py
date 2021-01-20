@@ -73,7 +73,8 @@ class CoCo:
 
             # MP 20/01/2021
             _LOGGER.info('MP: Topic: ' + topic)
-            _LOGGER.info('MP: Response: ' + response)
+            _LOGGER.info('MP: Response:')
+            _LOGGER.info(response)
 
             if topic == self._profile_creation_id + MQTT_TOPIC_PUBLIC_RSP and \
                     response[KEY_METHOD] == MQTT_METHOD_SYSINFO_PUBLISH:
