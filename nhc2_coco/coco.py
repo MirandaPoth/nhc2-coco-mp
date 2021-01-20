@@ -71,6 +71,10 @@ class CoCo:
             topic = message.topic
             response = json.loads(message.payload)
 
+            # MP 20/01/2021
+            _LOGGER.info('MP: Topic: ' + topic)
+            _LOGGER.info('MP: Response: ' + response)
+
             if topic == self._profile_creation_id + MQTT_TOPIC_PUBLIC_RSP and \
                     response[KEY_METHOD] == MQTT_METHOD_SYSINFO_PUBLISH:
                 self._system_info = response
