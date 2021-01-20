@@ -21,14 +21,14 @@ class CoCoSwitch(CoCoEntity):
         if extract_property_value_from_device(dev, KEY_BASICSTATE):
             _LOGGER.info('Turning ON ' + self.name)
             self._command_device_control(self._uuid, KEY_BASICSTATE, VALUE_ON)
-        else 
+        else: 
             self._command_device_control(self._uuid, KEY_STATUS, VALUE_ON)
 
     def turn_off(self):
         if extract_property_value_from_device(dev, KEY_BASICSTATE):
             _LOGGER.info('Turning OFF ' + self.name)
             self._command_device_control(self._uuid, KEY_BASICSTATE, VALUE_OFF)
-        else 
+        else: 
             self._command_device_control(self._uuid, KEY_STATUS, VALUE_OFF)
 
     def update_dev(self, dev, callback_container=None):
