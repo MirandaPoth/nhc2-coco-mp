@@ -71,9 +71,10 @@ class CoCo:
             response = json.loads(message.payload)
 
             # MP 20/01/2021
-            _LOGGER.info('MP: Topic: ' + topic)
-            _LOGGER.info('MP: Response:')
-            _LOGGER.info(response)
+            # MP 26/02/2021 changed from .info to .debug to avoid cluttering up the log
+            _LOGGER.debug('MP: Topic: ' + topic)
+            _LOGGER.debug('MP: Response:')
+            _LOGGER.debug(response)
 
             if topic == self._profile_creation_id + MQTT_TOPIC_PUBLIC_RSP and \
                     response[KEY_METHOD] == MQTT_METHOD_SYSINFO_PUBLISH:
@@ -100,8 +101,8 @@ class CoCo:
                     try:
                         if KEY_UUID in device:
                             self._device_callbacks[device[KEY_UUID]][INTERNAL_KEY_CALLBACK](device)
-                            _LOGGER.info('Setting callbacks for ...')
-                            _LOGGER.info(device)
+                            _LOGGER.debug('Setting callbacks for ...')
+                            _LOGGER.debug(device)
                     except:
                         pass
 
