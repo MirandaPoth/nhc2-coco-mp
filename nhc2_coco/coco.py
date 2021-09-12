@@ -58,7 +58,8 @@ class CoCo:
         ###
         ##context = ssl.create_default_context()
 
-        client.tls_set(ca_certs=ca_path, certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, ciphers=None)
+        #x client.tls_set(ca_certs=ca_path, certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, ciphers=None)
+        client.tls_set(ca_certs=None, certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, ciphers=None)
         client.tls_insecure_set(True)
 
         self._client = client
