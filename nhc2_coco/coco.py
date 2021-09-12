@@ -7,6 +7,9 @@ from typing import Callable
 
 import paho.mqtt.client as mqtt
 
+# MP 
+##import ssl 
+
 from .coco_device_class import CoCoDeviceClass
 from .coco_fan import CoCoFan
 from .coco_light import CoCoLight
@@ -48,9 +51,16 @@ class CoCo:
             ca_path = os.path.dirname(os.path.realpath(__file__)) + MQTT_CERT_FILE
         client = mqtt.Client(protocol=MQTT_PROTOCOL, transport=MQTT_TRANSPORT)
         client.username_pw_set(username, password)
-        ####client.tls_set(ca_path)
-        # client.tls_insecure_set(True)
-        client.tls_set(ca_certs=None, certfile=None, keyfile=None, ciphers=None)
+
+        # 12/9/21 WAS:
+        #client.tls_set(ca_path)
+        #client.tls_insecure_set(True)
+        ###
+        ##context = ssl.create_default_context()
+
+        client.tls_set(ca_certs=ca_path, certfile=None, keyfile=None, cert_reqs='CERT_NONE', ciphers=None)
+        client.tls_insecure_set(True)
+
         self._client = client
         self._address = address
         self._port = port
