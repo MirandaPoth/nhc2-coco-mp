@@ -50,8 +50,6 @@ class CoCo:
         client.username_pw_set(username, password)
         ####client.tls_set(ca_path)
         # client.tls_insecure_set(True)
-        # 12/09/2021 Trying this: 
-        client.tls_insecure_set(False)
         self._client = client
         self._address = address
         self._port = port
