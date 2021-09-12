@@ -50,6 +50,7 @@ class CoCo:
         client.username_pw_set(username, password)
         ####client.tls_set(ca_path)
         # client.tls_insecure_set(True)
+        client.tls_set(ca_certs=None, certfile=None, keyfile=None, cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLS, ciphers=None)
         self._client = client
         self._address = address
         self._port = port
