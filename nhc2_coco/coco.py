@@ -8,7 +8,7 @@ from typing import Callable
 import paho.mqtt.client as mqtt
 
 # MP 
-##import ssl 
+import ssl 
 
 from .coco_device_class import CoCoDeviceClass
 from .coco_fan import CoCoFan
@@ -58,7 +58,7 @@ class CoCo:
         ###
         ##context = ssl.create_default_context()
 
-        client.tls_set(ca_certs=ca_path, certfile=None, keyfile=None, cert_reqs='CERT_NONE', ciphers=None)
+        client.tls_set(ca_certs=ca_path, certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, ciphers=None)
         client.tls_insecure_set(True)
 
         self._client = client
