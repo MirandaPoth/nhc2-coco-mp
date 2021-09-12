@@ -30,6 +30,7 @@ DEVICE_SETS = {
 class CoCo:
     def __init__(self, address, username, password, port=8883, ca_path=None, switches_as_lights=False):
 
+        _LOGGER.info('MP: Coco init happening now: ' + password)
         if switches_as_lights:
             DEVICE_SETS[CoCoDeviceClass.LIGHTS] = {INTERNAL_KEY_CLASS: CoCoLight,
                                                    INTERNAL_KEY_MODELS: LIST_VALID_LIGHTS + LIST_VALID_SWITCHES}
@@ -48,7 +49,8 @@ class CoCo:
         client = mqtt.Client(protocol=MQTT_PROTOCOL, transport=MQTT_TRANSPORT)
         client.username_pw_set(username, password)
         client.tls_set(ca_path)
-        client.tls_insecure_set(True)
+        # client.tls_insecure_set(True)
+        client.tls_insecure_set(False)
         self._client = client
         self._address = address
         self._port = port
