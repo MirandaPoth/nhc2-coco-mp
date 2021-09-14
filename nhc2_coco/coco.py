@@ -33,7 +33,7 @@ DEVICE_SETS = {
 class CoCo:
     def __init__(self, address, username, password, port=8883, ca_path=None, switches_as_lights=False):
 
-        _LOGGER.info('MP: Coco init happening now: ' + password)
+        _LOGGER.info('MP: Coco init. Address: ' + address + ', port: ' + str(port))
         if switches_as_lights:
             DEVICE_SETS[CoCoDeviceClass.LIGHTS] = {INTERNAL_KEY_CLASS: CoCoLight,
                                                    INTERNAL_KEY_MODELS: LIST_VALID_LIGHTS + LIST_VALID_SWITCHES}
@@ -61,6 +61,8 @@ class CoCo:
         #x client.tls_set(ca_certs=ca_path, certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, ciphers=None)
         client.tls_set(ca_certs=None, certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, ciphers=None)
         client.tls_insecure_set(True)
+
+        _LOGGER.info('MP: Coco username ' + username + ', ca_path: ' + ca_path + ', password ' + password )
 
         self._client = client
         self._address = address
