@@ -59,6 +59,8 @@ class CoCo:
 
         # MP -------------------------- experimenting
         # no difference. client._clean_start = True
+        client._clean_start = False 
+        # This gives me an extra message in the log saying: 2021-09-16 12:32:39 ERROR (Thread-4) [nhc2_coco.coco] Caught exception in on_connect: Connection refused - not authorised
         client.enable_logger(_LOGGER)
         # MP --------------------------
 
