@@ -1,9 +1,9 @@
 from .coco_entity import CoCoEntity
-from .const import KEY_STATUS, VALUE_ON, VALUE_OFF
+from .const import KEY_BASICSTATE, VALUE_TRIGGERED, VALUE_ON, KEY_STATUS
 from .helpers import extract_property_value_from_device
 
 
-class CoCoSwitch(CoCoEntity):
+class CoCoGeneric(CoCoEntity):
 
     @property
     def is_on(self):
@@ -15,14 +15,14 @@ class CoCoSwitch(CoCoEntity):
         self.update_dev(dev, callback_container)
 
     def turn_on(self):
-        self._command_device_control(self._uuid, KEY_STATUS, VALUE_ON)
+        self._command_device_control(self._uuid, KEY_BASICSTATE, VALUE_TRIGGERED)
 
     def turn_off(self):
-        self._command_device_control(self._uuid, KEY_STATUS, VALUE_OFF)
+        self._command_device_control(self._uuid, KEY_BASICSTATE, VALUE_TRIGGERED)
 
     def update_dev(self, dev, callback_container=None):
         has_changed = super().update_dev(dev, callback_container)
-        status_value = extract_property_value_from_device(dev, KEY_STATUS)
+        status_value = extract_property_value_from_device(dev, KEY_BASICSTATE)
         if status_value and self._is_on != (status_value == VALUE_ON):
             self._is_on = (status_value == VALUE_ON)
             has_changed = True

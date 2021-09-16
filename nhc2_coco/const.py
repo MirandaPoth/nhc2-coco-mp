@@ -12,10 +12,12 @@ MQTT_CERT_FILE = '/coco_ca.pem'
 VALUE_DIMMER = 'dimmer'
 
 LIST_VALID_LIGHTS = ['light', VALUE_DIMMER]
-LIST_VALID_SWITCHES = ['socket', 'switched-generic', 'generic', 'alloff']
+LIST_VALID_SWITCHES = ['socket', 'switched-generic']
 LIST_VALID_SHUTTERS = ['rolldownshutter', 'sunblind', 'gate', 'venetianblind']
 LIST_VALID_FANS = ['fan']
 LIST_VALID_SWITCHED_FANS = ['switched-fan']
+LIST_VALID_THERMOSTATS = ['thermostat']
+LIST_VALID_GENERICS = ['generic']
 
 DEVICE_CONTROL_BUFFER_SIZE = 16
 DEVICE_CONTROL_BUFFER_COMMAND_SIZE = 32
@@ -36,16 +38,20 @@ KEY_POSITION = 'Position'
 KEY_STATUS = 'Status'
 KEY_TYPE = 'Type'
 KEY_UUID = 'Uuid'
-# MP 20/01/2021 For generic and alloff
-KEY_BASICSTATE = 'BasicState'
+KEY_BASICSTATE = "BasicState"
 
 VALUE_ON = 'On'
 VALUE_OFF = 'Off'
 VALUE_OPEN = 'Open'
 VALUE_STOP = 'Stop'
 VALUE_CLOSE = 'Close'
-# MP 20/01/2021 For generic and alloff
 VALUE_TRIGGERED = 'Triggered'
+
+THERM_PROGRAM = 'Program'
+THERM_OVERRULEACTION = 'OverruleActive'
+THERM_OVERRULESETPOINT = 'OverruleSetpoint'
+THERM_OVERRULETIME = 'OverruleTime'
+THERM_ECOSAVE = 'EcoSave'
 
 DEV_TYPE_ACTION = 'action'
 

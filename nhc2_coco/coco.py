@@ -7,15 +7,15 @@ from typing import Callable
 
 import paho.mqtt.client as mqtt
 
-# MP 
-import ssl 
-
 from .coco_device_class import CoCoDeviceClass
 from .coco_fan import CoCoFan
 from .coco_light import CoCoLight
 from .coco_shutter import CoCoShutter
 from .coco_switch import CoCoSwitch
 from .coco_switched_fan import CoCoSwitchedFan
+from .coco_climate import CoCoThermostat
+from .coco_generic import CoCoGeneric
+
 from .const import *
 from .helpers import *
 
@@ -26,7 +26,9 @@ DEVICE_SETS = {
     CoCoDeviceClass.FANS: {INTERNAL_KEY_CLASS: CoCoFan, INTERNAL_KEY_MODELS: LIST_VALID_FANS},
     CoCoDeviceClass.SHUTTERS: {INTERNAL_KEY_CLASS: CoCoShutter, INTERNAL_KEY_MODELS: LIST_VALID_SHUTTERS},
     CoCoDeviceClass.SWITCHES: {INTERNAL_KEY_CLASS: CoCoSwitch, INTERNAL_KEY_MODELS: LIST_VALID_SWITCHES},
-    CoCoDeviceClass.LIGHTS: {INTERNAL_KEY_CLASS: CoCoLight, INTERNAL_KEY_MODELS: LIST_VALID_LIGHTS}
+    CoCoDeviceClass.LIGHTS: {INTERNAL_KEY_CLASS: CoCoLight, INTERNAL_KEY_MODELS: LIST_VALID_LIGHTS},
+    CoCoDeviceClass.THERMOSTATS: {INTERNAL_KEY_CLASS: CoCoThermostat, INTERNAL_KEY_MODELS: LIST_VALID_THERMOSTATS},
+    CoCoDeviceClass.GENERIC: {INTERNAL_KEY_CLASS: CoCoGeneric, INTERNAL_KEY_MODELS: LIST_VALID_GENERICS}
 }
 
 
@@ -34,6 +36,7 @@ class CoCo:
     def __init__(self, address, username, password, port=8883, ca_path=None, switches_as_lights=False):
 
         _LOGGER.info('MP: Coco init. Address: ' + address + ', port: ' + str(port))
+        
         if switches_as_lights:
             DEVICE_SETS[CoCoDeviceClass.LIGHTS] = {INTERNAL_KEY_CLASS: CoCoLight,
                                                    INTERNAL_KEY_MODELS: LIST_VALID_LIGHTS + LIST_VALID_SWITCHES}
@@ -51,19 +54,8 @@ class CoCo:
             ca_path = os.path.dirname(os.path.realpath(__file__)) + MQTT_CERT_FILE
         client = mqtt.Client(protocol=MQTT_PROTOCOL, transport=MQTT_TRANSPORT)
         client.username_pw_set(username, password)
-
-        # 12/9/21 WAS:
-        #client.tls_set(ca_path)
-        #client.tls_insecure_set(True)
-        ###
-        ##context = ssl.create_default_context()
-
-        #x client.tls_set(ca_certs=ca_path, certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, ciphers=None)
-        client.tls_set(ca_certs=None, certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, ciphers=None)
+        client.tls_set(ca_path)
         client.tls_insecure_set(True)
-
-        _LOGGER.info('MP: Coco username ' + username + ', ca_path: ' + ca_path + ', password ' + password )
-
         self._client = client
         self._address = address
         self._port = port
@@ -84,12 +76,6 @@ class CoCo:
         def _on_message(client, userdata, message):
             topic = message.topic
             response = json.loads(message.payload)
-
-            # MP 20/01/2021
-            # MP 26/02/2021 changed from .info to .debug to avoid cluttering up the log
-            _LOGGER.debug('MP: Topic: ' + topic)
-            _LOGGER.debug('MP: Response:')
-            _LOGGER.debug(response)
 
             if topic == self._profile_creation_id + MQTT_TOPIC_PUBLIC_RSP and \
                     response[KEY_METHOD] == MQTT_METHOD_SYSINFO_PUBLISH:
@@ -116,8 +102,6 @@ class CoCo:
                     try:
                         if KEY_UUID in device:
                             self._device_callbacks[device[KEY_UUID]][INTERNAL_KEY_CALLBACK](device)
-                            _LOGGER.debug('Setting callbacks for ...')
-                            _LOGGER.debug(device)
                     except:
                         pass
 
@@ -195,6 +179,8 @@ class CoCo:
         # Only add devices that are actionable
         actionable_devices = list(
             filter(lambda d: d[KEY_TYPE] == DEV_TYPE_ACTION, extract_devices(response)))
+        actionable_devices.extend(list(
+            filter(lambda d: d[KEY_TYPE] == "thermostat", extract_devices(response))))
 
         # Only prepare for devices that don't already exist
         # TODO - Can't we do this when we need it (in initialize_devices ?)
@@ -210,6 +196,8 @@ class CoCo:
         self.initialize_devices(CoCoDeviceClass.SWITCHES, actionable_devices)
         self.initialize_devices(CoCoDeviceClass.LIGHTS, actionable_devices)
         self.initialize_devices(CoCoDeviceClass.SHUTTERS, actionable_devices)
+        self.initialize_devices(CoCoDeviceClass.THERMOSTATS, actionable_devices)
+        self.initialize_devices(CoCoDeviceClass.GENERIC, actionable_devices)
 
     def initialize_devices(self, device_class, actionable_devices):
 
