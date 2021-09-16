@@ -57,14 +57,6 @@ class CoCo:
         client.tls_set(ca_path)
         client.tls_insecure_set(True)
 
-        # MP -------------------------- experimenting
-        # no difference. client._clean_start = True
-        # no difference. client._clean_start = False 
-        client._clean_session = True
-        # This gives me an extra message in the log saying: 2021-09-16 12:32:39 ERROR (Thread-4) [nhc2_coco.coco] Caught exception in on_connect: Connection refused - not authorised
-        client.enable_logger(_LOGGER)
-        # MP --------------------------
-
         self._client = client
         self._address = address
         self._port = port
