@@ -58,7 +58,8 @@ class CoCo:
         client.tls_insecure_set(True)
 
         # MP -------------------------- experimenting
-        client._clean_start = True
+        # no difference. client._clean_start = True
+        client.enable_logger(_LOGGER)
         # MP --------------------------
 
         self._client = client
