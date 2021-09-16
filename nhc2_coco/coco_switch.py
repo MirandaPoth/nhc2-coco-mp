@@ -1,5 +1,5 @@
 from .coco_entity import CoCoEntity
-from .const import KEY_STATUS, VALUE_ON, VALUE_OFF
+from .const import KEY_STATUS, VALUE_ON, VALUE_OFF, KEY_BASICSTATE
 from .helpers import extract_property_value_from_device
 
 
@@ -23,9 +23,25 @@ class CoCoSwitch(CoCoEntity):
     def update_dev(self, dev, callback_container=None):
         has_changed = super().update_dev(dev, callback_container)
         status_value = extract_property_value_from_device(dev, KEY_STATUS)
-        if status_value and self._is_on != (status_value == VALUE_ON):
+
+        # MP 16-09-2021 (from 20/01/2021) for generic and alloff, property 'BasicState' says whether it's off or on, not 'Status'
+        basicstate_value = extract_property_value_from_device(dev, KEY_BASICSTATE)
+
+        #_LOGGER.debug('For ' + self.name + ', self.on_off_property is ' + self.on_off_property)
+        # MP debugging ...
+        #if basicstate_value:
+        #    _LOGGER.debug('BasicState of device ' + self.model + ' ' + self.uuid + ' ' + self.name + ' is ' + basicstate_value)
+
+        # ORIGINAL:
+        #if status_value and self._is_on != (status_value == VALUE_ON):
+        #    self._is_on = (status_value == VALUE_ON)
+        #    has_changed = True
+
+        if ( status_value and self._is_on != (status_value == VALUE_ON) ) or \
+            ( basicstate_value and self._is_on != (basicstate_value == VALUE_ON) ):
             self._is_on = (status_value == VALUE_ON)
             has_changed = True
+
         return has_changed
 
     def _update(self, dev):
