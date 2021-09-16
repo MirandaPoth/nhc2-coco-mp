@@ -36,7 +36,7 @@ class CoCo:
     def __init__(self, address, username, password, port=8883, ca_path=None, switches_as_lights=False):
 
         _LOGGER.info('MP: Coco init. Address: ' + address + ', port: ' + str(port))
-        
+
         if switches_as_lights:
             DEVICE_SETS[CoCoDeviceClass.LIGHTS] = {INTERNAL_KEY_CLASS: CoCoLight,
                                                    INTERNAL_KEY_MODELS: LIST_VALID_LIGHTS + LIST_VALID_SWITCHES}
@@ -66,6 +66,10 @@ class CoCo:
         self._devices_callback = {}
         self._system_info = None
         self._system_info_callback = lambda x: None
+
+        _LOGGER.info('MP: self._client follows:')
+        _LOGGER.info(self._client)
+        _LOGGER.info('MP: self._client done.')
 
     def __del__(self):
         self._keep_thread_running = False
