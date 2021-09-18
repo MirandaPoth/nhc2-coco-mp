@@ -41,6 +41,15 @@ class CoCo:
             DEVICE_SETS[CoCoDeviceClass.LIGHTS] = {INTERNAL_KEY_CLASS: CoCoLight,
                                                    INTERNAL_KEY_MODELS: LIST_VALID_LIGHTS + LIST_VALID_SWITCHES}
             DEVICE_SETS[CoCoDeviceClass.SWITCHES] = {INTERNAL_KEY_CLASS: CoCoSwitch, INTERNAL_KEY_MODELS: []}
+
+        # MP 18/09/2021 I want generics in with switches. Really this should be a flag too like switches_as_lights
+        # but I have no need for that.
+        generics_as_switches = True
+        if generics_as_switches:
+            DEVICE_SETS[CoCoDeviceClass.SWITCHES] = {INTERNAL_KEY_CLASS: CoCoSwitch,
+                                                   INTERNAL_KEY_MODELS: LIST_VALID_SWITCHES + LIST_VALID_GENERICS}
+            DEVICE_SETS[CoCoDeviceClass.GENERICS] = {INTERNAL_KEY_CLASS: CoCoGeneric, INTERNAL_KEY_MODELS: []}
+
         # The device control buffer fields
         self._keep_thread_running = True
         self._device_control_buffer = {}

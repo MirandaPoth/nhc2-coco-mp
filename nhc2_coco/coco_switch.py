@@ -2,7 +2,8 @@
 import logging
 
 from .coco_entity import CoCoEntity
-from .const import KEY_STATUS, VALUE_ON, VALUE_OFF, KEY_BASICSTATE, VALUE_TRIGGERED # MP Added these last two
+# MP Added the last two to cope with generics_as_switches. More related code below.
+from .const import KEY_STATUS, VALUE_ON, VALUE_OFF, KEY_BASICSTATE, VALUE_TRIGGERED 
 from .helpers import extract_property_value_from_device
 
 # MP
