@@ -178,6 +178,9 @@ class CoCo:
             sem.release()
             if device_commands_to_process is not None:
                 command = process_device_commands(device_commands_to_process)
+                # MP debugging
+                _LOGGER.debug('About to publish command:')
+                _LOGGER.debug(command)
                 self._client.publish(self._profile_creation_id + MQTT_TOPIC_SUFFIX_CMD, json.dumps(command), 1)
             sleep(0.05)
 
