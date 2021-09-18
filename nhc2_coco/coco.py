@@ -48,7 +48,7 @@ class CoCo:
         if generics_as_switches:
             DEVICE_SETS[CoCoDeviceClass.SWITCHES] = {INTERNAL_KEY_CLASS: CoCoSwitch,
                                                    INTERNAL_KEY_MODELS: LIST_VALID_SWITCHES + LIST_VALID_GENERICS}
-            DEVICE_SETS[CoCoDeviceClass.GENERICS] = {INTERNAL_KEY_CLASS: CoCoGeneric, INTERNAL_KEY_MODELS: []}
+            DEVICE_SETS[CoCoDeviceClass.GENERIC] = {INTERNAL_KEY_CLASS: CoCoGeneric, INTERNAL_KEY_MODELS: []}
 
         # The device control buffer fields
         self._keep_thread_running = True
