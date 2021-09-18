@@ -29,7 +29,7 @@ class CoCoSwitch(CoCoEntity):
         self.update_dev(dev, callback_container)
 
     def turn_on(self):
-        # ORIINAL: self._command_device_control(self._uuid, KEY_STATUS, VALUE_ON)
+        # ORIGINAL: self._command_device_control(self._uuid, KEY_STATUS, VALUE_ON)
 
         # This gets called from HA when it wants to turn it ON
         _LOGGER.debug('HA is turning ON ' + self.name)
@@ -40,7 +40,13 @@ class CoCoSwitch(CoCoEntity):
 
 
     def turn_off(self):
-        self._command_device_control(self._uuid, KEY_STATUS, VALUE_OFF)
+        # MP 18/09/2021 Need to cope with Basicstate too like above
+        # ORIGINAL: self._command_device_control(self._uuid, KEY_STATUS, VALUE_OFF)
+        if self.on_off_property == KEY_BASICSTATE:
+            # These devices are like a toggle I think ... not sure if this will do
+            self._command_device_control(self._uuid, self.on_off_property, VALUE_TRIGGERED)
+        else:
+            self._command_device_control(self._uuid, self.on_off_property, VALUE_OFF)
 
     def update_dev(self, dev, callback_container=None):
         has_changed = super().update_dev(dev, callback_container)
