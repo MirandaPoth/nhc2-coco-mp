@@ -78,7 +78,11 @@ class CoCoSwitch(CoCoEntity):
             self._is_on = (status_value == VALUE_ON)
             has_changed = True
 
-        _LOGGER.debug('has_changed is ' + has_changed)
+        # MP debugging
+        if has_changed:
+            _LOGGER.debug('has_changed is True')
+        else:
+            _LOGGER.debug('has_changed is False')
 
         return has_changed
 
