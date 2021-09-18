@@ -53,7 +53,11 @@ class CoCoSwitch(CoCoEntity):
         has_changed = super().update_dev(dev, callback_container)
         status_value = extract_property_value_from_device(dev, KEY_STATUS)
 
-        _LOGGER.debug('HA is updating switch device ' + self.name + '(on_off_property is ' + self.on_off_property + ', status_value is ' + status_value + ')')
+        if status_value is None:
+            sv = ''
+        else:
+            sv = status_value
+        _LOGGER.debug('HA is updating switch device ' + self.name + '(on_off_property is ' + self.on_off_property + ', status_value is ' + sv + ')')
 
         # MP 16-09-2021 (from 20/01/2021) for generic and alloff, property 'BasicState' says whether it's off or on, not 'Status'
         if status_value:
