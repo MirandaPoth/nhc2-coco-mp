@@ -32,7 +32,7 @@ class CoCoSwitch(CoCoEntity):
         # ORIGINAL: self._command_device_control(self._uuid, KEY_STATUS, VALUE_ON)
 
         # This gets called from HA when it wants to turn it ON
-        _LOGGER.debug('HA is turning ON ' + self.name)
+        _LOGGER.debug('HA is turning switch ON ' + self.name + '(on_off_property is ' + self.on_off_property + ')')
         if self.on_off_property == KEY_BASICSTATE:
             self._command_device_control(self._uuid, self.on_off_property, VALUE_TRIGGERED)
         else:
@@ -42,6 +42,7 @@ class CoCoSwitch(CoCoEntity):
     def turn_off(self):
         # MP 18/09/2021 Need to cope with Basicstate too like above
         # ORIGINAL: self._command_device_control(self._uuid, KEY_STATUS, VALUE_OFF)
+        _LOGGER.debug('HA is turning switch OFF ' + self.name + '(on_off_property is ' + self.on_off_property + ')')
         if self.on_off_property == KEY_BASICSTATE:
             # These devices are like a toggle I think ... not sure if this will do
             self._command_device_control(self._uuid, self.on_off_property, VALUE_TRIGGERED)
@@ -51,6 +52,8 @@ class CoCoSwitch(CoCoEntity):
     def update_dev(self, dev, callback_container=None):
         has_changed = super().update_dev(dev, callback_container)
         status_value = extract_property_value_from_device(dev, KEY_STATUS)
+
+        _LOGGER.debug('HA is updating switch device ' + self.name + '(on_off_property is ' + self.on_off_property + ', status_value is ' + status_value + ')')
 
         # MP 16-09-2021 (from 20/01/2021) for generic and alloff, property 'BasicState' says whether it's off or on, not 'Status'
         if status_value:
