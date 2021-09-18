@@ -92,8 +92,8 @@ class CoCo:
             response = json.loads(message.payload)
 
             # MP for debugging
-            _LOGGER.debug('MP: Topic: ' + topic)
-            _LOGGER.debug('MP: Response: ')
+            #_LOGGER.debug('MP: Topic: ' + topic)
+            _LOGGER.debug('MP: Niko response: ')
             _LOGGER.debug(response)
 
             if topic == self._profile_creation_id + MQTT_TOPIC_PUBLIC_RSP and \
@@ -179,7 +179,7 @@ class CoCo:
             if device_commands_to_process is not None:
                 command = process_device_commands(device_commands_to_process)
                 # MP debugging
-                _LOGGER.debug('About to publish command:')
+                _LOGGER.debug('MP: Niko publish:')
                 _LOGGER.debug(command)
                 self._client.publish(self._profile_creation_id + MQTT_TOPIC_SUFFIX_CMD, json.dumps(command), 1)
             sleep(0.05)
